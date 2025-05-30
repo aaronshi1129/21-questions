@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +14,8 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .card-container {
@@ -180,9 +183,26 @@
         .toast-message {
             transition: opacity 0.3s ease;
         }
+        
+        /* Footer styling */
+        .footer {
+            margin-top: auto;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            color: white;
+        }
     </style>
 </head>
-<body class="p-4 flex justify-center items-center min-h-screen" id="game-body">
+<body class="p-4 flex flex-col justify-between min-h-screen" id="game-body">
     <!-- Audio element for correct answer sound -->
     <audio id="correct-sound" src="correct.mp3" preload="auto"></audio>
 
@@ -191,7 +211,7 @@
         <div id="home-page" class="p-4 md:p-6">
             <div class="text-center mb-6">
                 <h1 class="text-4xl font-bold text-indigo-800 mb-4">21 Questions</h1>
-                <p class="text-xl text-gray-600">Test your guessing skills on <b>occupations</b>!</p>
+                <p class="text-xl text-gray-600">Test your deduction skills on <b>occupation</b> vocabulary!</p>
             </div>
             
             <div class="space-y-6 mb-8">
@@ -280,7 +300,7 @@
                 <p class="text-gray-600 mt-2">Reveal questions to help you guess the word!</p>
                 <div class="mt-3 flex justify-center items-center space-x-4">
                     <span class="text-sm bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full">
-                        Questions revealed: <span id="selected-count" class="font-bold">0</span>/21
+                        Questions revealed: <span id="selected-count" class="font-bold">0</span>/<span id="total-questions">21</span>
                     </span>
                     <div class="stars-container">
                         <span class="star">★</span>
@@ -330,1094 +350,221 @@
             </div>
         </div>
     </div>
+    
+    <!-- Footer -->
+    <footer class="footer mt-6 rounded-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-center items-center text-center md:text-left">
+            <p class="mr-2">
+                <a href="https://www.aaronshi.cc" target="_blank" rel="noopener noreferrer" class="flex items-center hover:text-white transition duration-300">
+                    Go to AaronShi.cc
+                </a>
+            </p>
+            <span class="mx-2 hidden md:inline">|</span>
+            <a href="https://app.aaronshi.cc" target="_blank" rel="noopener noreferrer" class="flex items-center hover:text-white transition duration-300">
+                Back to AaronShi.cc App
+            </a>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const occupations = [
                 {
                     name: "Doctor",
-                    answers: {
+                    questions: {
                         "Do they work indoors?": "Yes",
                         "Do they need a college degree?": "Yes",
                         "Do they work with their hands?": "Yes",
-                        "Do they wear a uniform?": "Yes",
-                        "Do they work with technology?": "Yes",
+                        "Do they wear a uniform?": "Yes, often a white coat",
+                        "Do they work with technology?": "Yes, medical equipment",
                         "Do they work with children?": "Sometimes",
-                        "Is their job dangerous?": "Can be",
-                        "Do they work in teams?": "Yes",
-                        "Do they need special certification?": "Yes",
-                        "Do they work nights?": "Sometimes",
+                        "Is their job dangerous?": "Can be, especially with infectious diseases",
+                        "Do they work in teams?": "Yes, with nurses and other specialists",
+                        "Do they need special certification?": "Yes, medical license",
+                        "Do they work nights?": "Sometimes, especially in hospitals",
                         "Do they earn a high salary?": "Yes",
-                        "Do they work with animals?": "No",
-                        "Do they travel for work?": "Sometimes",
-                        "Do they work outdoors?": "No",
-                        "Do they create things?": "No",
-                        "Do they use specialized tools?": "Yes",
-                        "Do they work with the public?": "Yes",
-                        "Is physical fitness important?": "Somewhat",
-                        "Do they work for the government?": "Sometimes",
-                        "Do they work with food?": "No",
-                        "Are they self-employed?": "Sometimes"
+                        "Do they prescribe medication?": "Yes",
+                        "Do they perform surgeries?": "Some do",
+                        "Do they diagnose illnesses?": "Yes",
+                        "Do they work in hospitals?": "Often",
+                        "Do they use specialized tools?": "Yes, stethoscopes and other medical instruments",
+                        "Do they work with the public?": "Yes, patients",
+                        "Is physical fitness important?": "Somewhat, especially for long shifts",
+                        "Do they specialize in specific areas?": "Often, like cardiology or pediatrics",
+                        "Do they take an oath?": "Yes, the Hippocratic Oath",
+                        "Are they self-employed?": "Sometimes have private practices"
                     },
-                    hint: "They help people feel better"
+                    hint: "They help people feel better and treat illnesses"
                 },
                 {
                     name: "Teacher",
-                    answers: {
-                        "Do they work indoors?": "Yes",
+                    questions: {
+                        "Do they work indoors?": "Yes, in classrooms",
                         "Do they need a college degree?": "Yes",
-                        "Do they work with their hands?": "Sometimes",
-                        "Do they wear a uniform?": "No",
-                        "Do they work with technology?": "Yes",
+                        "Do they work with their hands?": "Sometimes, especially when demonstrating",
+                        "Do they wear a uniform?": "No, but usually dress professionally",
+                        "Do they work with technology?": "Yes, increasingly so",
                         "Do they work with children?": "Yes",
                         "Is their job dangerous?": "No",
-                        "Do they work in teams?": "Yes",
-                        "Do they need special certification?": "Yes",
-                        "Do they work nights?": "Sometimes",
-                        "Do they earn a high salary?": "No",
-                        "Do they work with animals?": "No",
-                        "Do they travel for work?": "Rarely",
-                        "Do they work outdoors?": "Sometimes",
-                        "Do they create things?": "Yes",
-                        "Do they use specialized tools?": "Sometimes",
-                        "Do they work with the public?": "Yes",
-                        "Is physical fitness important?": "No",
-                        "Do they work for the government?": "Often",
-                        "Do they work with food?": "No",
-                        "Are they self-employed?": "Rarely"
+                        "Do they work in teams?": "Yes, with other educators",
+                        "Do they need special certification?": "Yes, teaching credentials",
+                        "Do they grade papers?": "Yes",
+                        "Do they create lesson plans?": "Yes",
+                        "Do they have summers off?": "Often",
+                        "Do they earn a high salary?": "No, typically moderate",
+                        "Do they work with parents?": "Yes, during conferences",
+                        "Do they assign homework?": "Yes",
+                        "Do they use specialized tools?": "Educational materials and resources",
+                        "Do they work with the public?": "Yes, students and parents",
+                        "Do they have a curriculum to follow?": "Yes",
+                        "Do they work for the government?": "Often in public schools",
+                        "Do they lead group activities?": "Yes",
+                        "Are they self-employed?": "Rarely, except for tutors"
                     },
-                    hint: "They help others learn"
+                    hint: "They help others learn and develop knowledge"
                 },
                 {
-                  "name": "Chef",
-                  "answers": {
-                    "Do they work indoors?": "Yes",
-                    "Do they need a college degree?": "No",
-                    "Do they work with their hands?": "Yes",
-                    "Do they wear a uniform?": "Yes",
-                    "Do they work with technology?": "Sometimes",
-                    "Do they work with children?": "No",
-                    "Is their job dangerous?": "Sometimes",
-                    "Do they work in teams?": "Yes",
-                    "Do they need special certification?": "Sometimes",
-                    "Do they work nights?": "Often",
-                    "Do they earn a high salary?": "Sometimes",
-                    "Do they work with animals?": "No",
-                    "Do they travel for work?": "Sometimes",
-                    "Do they work outdoors?": "No",
-                    "Do they create things?": "Yes",
-                    "Do they use specialized tools?": "Yes",
-                    "Do they work with the public?": "Sometimes",
-                    "Is physical fitness important?": "Yes",
-                    "Do they work for the government?": "Rarely",
-                    "Do they work with food?": "Yes",
-                    "Are they self-employed?": "Sometimes"
-                  },
-                  "hint": "They cook meals in restaurants or kitchens"
+                    name: "Chef",
+                    questions: {
+                        "Do they work indoors?": "Yes, in kitchens",
+                        "Do they need a college degree?": "No, but culinary school is common",
+                        "Do they work with their hands?": "Yes, constantly",
+                        "Do they wear a uniform?": "Yes, chef's whites and toque",
+                        "Do they work with heat?": "Yes, stoves and ovens",
+                        "Do they create recipes?": "Often",
+                        "Is their job dangerous?": "Somewhat, burns and cuts are common",
+                        "Do they work in teams?": "Yes, kitchen staff",
+                        "Do they need special certification?": "Food safety certifications",
+                        "Do they work nights?": "Often, especially in restaurants",
+                        "Do they earn a high salary?": "Varies, celebrity chefs do",
+                        "Do they work with knives?": "Yes, extensively",
+                        "Do they travel for work?": "Sometimes, especially high-profile chefs",
+                        "Do they taste food?": "Yes, constantly",
+                        "Do they create things?": "Yes, dishes and menus",
+                        "Do they use specialized tools?": "Yes, kitchen equipment",
+                        "Do they work with the public?": "Sometimes, especially in open kitchens",
+                        "Is physical fitness important?": "Yes, standing for long hours",
+                        "Do they work under pressure?": "Yes, especially during service",
+                        "Do they work with food?": "Yes, it's their primary medium",
+                        "Can they become famous?": "Yes, through restaurants, books, and TV"
+                    },
+                    hint: "They create delicious dishes in restaurants"
                 },
                 {
-                  "name": "Firefighter",
-                  "answers": {
-                    "Do they wear protective gear while working?": "Yes",
-                    "Do they respond to emergencies?": "Yes",
-                    "Do they drive large vehicles?": "Yes",
-                    "Do they work in dangerous situations?": "Yes",
-                    "Do they use water at work?": "Yes",
-                    "Do they rescue people or animals?": "Yes",
-                    "Do they work at a station?": "Yes",
-                    "Do they carry heavy equipment?": "Yes",
-                    "Do they work shifts, including nights?": "Yes",
-                    "Do they work outdoors a lot?": "Yes",
-                    "Do they have to be physically fit?": "Yes",
-                    "Do they need special training and certification?": "Yes",
-                    "Do they usually work in teams?": "Yes",
-                    "Do they wear a business suit to work?": "No",
-                    "Do they teach in classrooms?": "No",
-                    "Do they sit at a desk most of the time?": "No",
-                    "Do they work in hospitals?": "No",
-                    "Do they handle food?": "No",
-                    "Do they travel internationally for work?": "No",
-                    "Do they usually work with computers?": "No",
-                    "Is their job considered heroic?": "Yes"
-                  },
-                  "hint": "They save people and put out fires."
+                    name: "Firefighter",
+                    questions: {
+                        "Do they work indoors?": "Sometimes, but often at emergency scenes",
+                        "Do they need a college degree?": "No, but training is required",
+                        "Do they work with their hands?": "Yes",
+                        "Do they wear a uniform?": "Yes, protective gear",
+                        "Do they work with water?": "Yes, to extinguish fires",
+                        "Do they rescue people?": "Yes",
+                        "Is their job dangerous?": "Yes, very",
+                        "Do they work in teams?": "Yes, crews",
+                        "Do they need special certification?": "Yes, firefighting certification",
+                        "Do they work 24-hour shifts?": "Often",
+                        "Do they earn a high salary?": "Moderate, with benefits",
+                        "Do they drive special vehicles?": "Yes, fire trucks",
+                        "Do they respond to emergencies?": "Yes",
+                        "Do they work outdoors?": "Yes, at emergency scenes",
+                        "Do they train regularly?": "Yes, physical and technical training",
+                        "Do they use specialized tools?": "Yes, axes, hoses, breathing apparatus",
+                        "Do they work with the public?": "Yes, during emergencies and prevention",
+                        "Is physical fitness important?": "Very important",
+                        "Do they work for the government?": "Yes, municipal departments",
+                        "Do they inspect buildings?": "Yes, for fire safety",
+                        "Do they live at their workplace?": "During shifts, at the firehouse"
+                    },
+                    hint: "They respond to emergencies and put out fires"
                 },
                 {
                     name: "Programmer",
-                    answers: {
-                        "Do they work indoors?": "Yes",
-                        "Do they need a college degree?": "Often",
-                        "Do they work with their hands?": "Yes",
-                        "Do they wear a uniform?": "No",
-                        "Do they work with technology?": "Yes",
-                        "Do they work with children?": "No",
+                    questions: {
+                        "Do they work indoors?": "Yes, usually in offices",
+                        "Do they need a college degree?": "Often, but not always required",
+                        "Do they work with their hands?": "Yes, typing",
+                        "Do they wear a uniform?": "No, usually casual dress",
+                        "Do they work with technology?": "Yes, computers",
+                        "Do they write code?": "Yes",
                         "Is their job dangerous?": "No",
                         "Do they work in teams?": "Often",
-                        "Do they need special certification?": "Sometimes",
-                        "Do they work nights?": "Sometimes",
+                        "Do they need special certification?": "Sometimes, but skills matter more",
+                        "Do they work nights?": "Sometimes, especially before deadlines",
                         "Do they earn a high salary?": "Often",
-                        "Do they work with animals?": "No",
-                        "Do they travel for work?": "Sometimes",
-                        "Do they work outdoors?": "Rarely",
-                        "Do they create things?": "Yes",
-                        "Do they use specialized tools?": "Yes",
-                        "Do they work with the public?": "Rarely",
+                        "Do they debug problems?": "Yes",
+                        "Do they work remotely?": "Increasingly common",
+                        "Do they attend meetings?": "Yes",
+                        "Do they create things?": "Yes, software and applications",
+                        "Do they use specialized tools?": "Yes, programming languages and software",
+                        "Do they work with the public?": "Rarely directly",
                         "Is physical fitness important?": "No",
-                        "Do they work for the government?": "Sometimes",
-                        "Do they work with food?": "No",
-                        "Are they self-employed?": "Sometimes"
+                        "Do they work for tech companies?": "Often, but many industries need them",
+                        "Do they solve problems?": "Yes, constantly",
+                        "Do they continue learning throughout career?": "Yes, technology evolves quickly"
                     },
-                    hint: "They write code"
+                    hint: "They write code to create software and applications"
                 },
                 {
                     name: "Pilot",
-                    answers: {
-                        "Do they work indoors?": "Partly",
-                        "Do they need a college degree?": "Often",
-                        "Do they work with their hands?": "Yes",
-                        "Do they wear a uniform?": "Yes",
-                        "Do they work with technology?": "Yes",
-                        "Do they work with children?": "No",
-                        "Is their job dangerous?": "Can be",
-                        "Do they work in teams?": "Yes",
-                        "Do they need special certification?": "Yes",
-                        "Do they work nights?": "Yes",
-                        "Do they earn a high salary?": "Yes",
-                        "Do they work with animals?": "No",
-                        "Do they travel for work?": "Yes",
-                        "Do they work outdoors?": "No",
+                    questions: {
+                        "Do they work indoors?": "Partly, in a cockpit",
+                        "Do they need a college degree?": "Often preferred",
+                        "Do they work with their hands?": "Yes, operating controls",
+                        "Do they wear a uniform?": "Yes, with stripes indicating rank",
+                        "Do they work with technology?": "Yes, aircraft systems",
+                        "Do they transport people?": "Yes",
+                        "Is their job dangerous?": "Can be, but modern aviation is very safe",
+                        "Do they work in teams?": "Yes, with co-pilots and crew",
+                        "Do they need special certification?": "Yes, pilot's license",
+                        "Do they work nights?": "Yes, on overnight flights",
+                        "Do they earn a high salary?": "Yes, especially senior pilots",
+                        "Do they travel internationally?": "Often",
+                        "Do they make announcements?": "Yes, to passengers",
+                        "Do they fly above clouds?": "Yes",
                         "Do they create things?": "No",
-                        "Do they use specialized tools?": "Yes",
-                        "Do they work with the public?": "Yes",
-                        "Is physical fitness important?": "Yes",
-                        "Do they work for the government?": "Sometimes",
-                        "Do they work with food?": "No",
-                        "Are they self-employed?": "Rarely"
+                        "Do they use specialized tools?": "Yes, aircraft controls and navigation",
+                        "Do they work with the public?": "Yes, passengers",
+                        "Is physical fitness important?": "Yes, and regular medical checks",
+                        "Do they work for airlines?": "Often",
+                        "Do they follow strict protocols?": "Yes, for safety",
+                        "Do they check weather conditions?": "Yes, constantly"
                     },
-                    hint: "They transport people through the air"
+                    hint: "They transport people through the air in aircraft"
                 },
                 {
                     name: "Lawyer",
-                    answers: {
-                        "Do they work indoors?": "Yes",
-                        "Do they need a college degree?": "Yes",
-                        "Do they work with their hands?": "No",
-                        "Do they wear a uniform?": "Sometimes",
-                        "Do they work with technology?": "Yes",
-                        "Do they work with children?": "Sometimes",
+                    questions: {
+                        "Do they work indoors?": "Yes, offices and courtrooms",
+                        "Do they need a college degree?": "Yes, plus law school",
+                        "Do they work with their hands?": "No, mostly intellectual work",
+                        "Do they wear a uniform?": "Sometimes formal attire in court",
+                        "Do they work with legal documents?": "Yes",
+                        "Do they represent clients?": "Yes",
                         "Is their job dangerous?": "Rarely",
-                        "Do they work in teams?": "Sometimes",
-                        "Do they need special certification?": "Yes",
-                        "Do they work nights?": "Sometimes",
-                        "Do they earn a high salary?": "Often",
-                        "Do they work with animals?": "No",
-                        "Do they travel for work?": "Sometimes",
-                        "Do they work outdoors?": "No",
-                        "Do they create things?": "No",
-                        "Do they use specialized tools?": "No",
-                        "Do they work with the public?": "Yes",
-                        "Is physical fitness important?": "No",
-                        "Do they work for the government?": "Sometimes",
-                        "Do they work with food?": "No",
-                        "Are they self-employed?": "Sometimes"
+                        "Do they work in teams?": "Sometimes, at law firms",
+                        "Do they need special certification?": "Yes, bar admission",
+                        "Do they work nights?": "Sometimes, especially before cases",
+                        "Do they earn a high salary?": "Often, especially at large firms",
+                        "Do they argue cases?": "Some do, in court",
+                        "Do they research laws?": "Yes",
+                        "Do they provide advice?": "Yes, legal counsel",
+                        "Do they draft contracts?": "Yes",
+                        "Do they use specialized tools?": "Legal databases and resources",
+                        "Do they work with the public?": "Yes, clients",
+                        "Do they specialize in specific areas?": "Often, like criminal or corporate law",
+                        "Do they work for the government?": "Some do, as prosecutors or public defenders",
+                        "Do they take an oath?": "Yes, when admitted to the bar",
+                        "Are they self-employed?": "Sometimes have private practices"
                     },
-                    hint: "They represent clients in legal matters"
-                },
-                {
-  "name": "Flight Attendant",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Yes",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Yes",
-    "Do they work outdoors?": "No",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "Yes",
-    "Are they self-employed?": "No"
-  },
-  "hint": "They help passengers during flights"
-},
-{
-  "name": "Construction Worker",
-  "answers": {
-    "Do they work indoors?": "Sometimes",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Sometimes",
-    "Do they work with children?": "No",
-    "Is their job dangerous?": "Yes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Sometimes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Sometimes",
-    "Do they work outdoors?": "Yes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Rarely",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Sometimes"
-  },
-  "hint": "They build and repair buildings or roads"
-},
-                {
-  "name": "Nurse",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Yes",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Often",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Sometimes",
-    "Do they work outdoors?": "No",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Rarely"
-  },
-  "hint": "They care for sick or injured people"
-},
-                {
-  "name": "Police Officer",
-  "answers": {
-    "Do they work indoors?": "Sometimes",
-    "Do they need a college degree?": "Sometimes",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Yes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Often",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "Sometimes",
-    "Do they travel for work?": "Yes",
-    "Do they work outdoors?": "Yes",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Yes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "No"
-  },
-  "hint": "They enforce the law and keep people safe"
-},
-                {
-  "name": "Teacher",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Yes",
-    "Do they work with their hands?": "Sometimes",
-    "Do they wear a uniform?": "No",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Often",
-    "Is their job dangerous?": "Rarely",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Rarely",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Sometimes",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "Often",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Sometimes"
-  },
-  "hint": "They help students learn new things"
-},
-{
-  "name": "Kindergarten Teacher",
-  "answers": {
-    "Do they work with children?": "Yes",
-    "Do they teach basic skills like the alphabet and numbers?": "Yes",
-    "Do they often read stories aloud?": "Yes",
-    "Do they help children learn to share and play?": "Yes",
-    "Do they create lesson plans?": "Yes",
-    "Do they work in a classroom?": "Yes",
-    "Do they use art supplies like crayons and glue?": "Yes",
-    "Do they meet with parents?": "Yes",
-    "Do they supervise children during playtime?": "Yes",
-    "Do they need a teaching license or degree?": "Yes",
-    "Do they work weekdays?": "Yes",
-    "Do they work with teenagers?": "No",
-    "Do they perform surgeries?": "No",
-    "Do they work in an office building?": "No",
-    "Do they usually work alone?": "No",
-    "Do they travel for work?": "No",
-    "Do they sit at a computer all day?": "No",
-    "Do they build houses?": "No",
-    "Do they work on airplanes?": "No",
-    "Do they wear a firefighter's uniform?": "No",
-    "Do they sing songs with children?": "Yes"
-  },
-  "hint": "They help young kids learn in school."
-},
-{
-  "name": "Photographer",
-  "answers": {
-    "Do they take pictures for a living?": "Yes",
-    "Do they use a professional camera?": "Yes",
-    "Do they work at weddings and events?": "Often",
-    "Do they sometimes work in studios?": "Yes",
-    "Do they edit photos on a computer?": "Yes",
-    "Do they work indoors and outdoors?": "Yes",
-    "Do they travel for work?": "Sometimes",
-    "Do they work with models or clients?": "Yes",
-    "Do they create photo albums or galleries?": "Yes",
-    "Do they need a good eye for detail?": "Yes",
-    "Do they wear a uniform?": "No",
-    "Do they work in hospitals?": "No",
-    "Do they teach math?": "No",
-    "Do they drive trucks?": "No",
-    "Do they give people haircuts?": "No",
-    "Do they usually work 9 to 5 in an office?": "No",
-    "Do they need to know lighting and angles?": "Yes",
-    "Do they sell their work sometimes?": "Yes",
-    "Do they use photo editing software?": "Yes",
-    "Do they often work alone?": "Yes",
-    "Do they need a license to take pictures?": "No"
-  },
-  "hint": "They capture moments with a camera."
-},
-{
-  "name": "Dentist",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Yes",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Rarely",
-    "Do they earn a high salary?": "Yes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Rarely",
-    "Do they work outdoors?": "No",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They take care of people’s teeth"
-},
-{
-  "name": "Pilot",
-  "answers": {
-    "Do they fly airplanes?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work in a cockpit?": "Yes",
-    "Do they travel internationally?": "Often",
-    "Do they need a license to do their job?": "Yes",
-    "Do they communicate with air traffic control?": "Yes",
-    "Do they work for airlines?": "Often",
-    "Do they work at airports?": "Yes",
-    "Do they work during the day and night?": "Yes",
-    "Do they control a plane’s direction and speed?": "Yes",
-    "Do they sit while working?": "Yes",
-    "Do they teach in classrooms?": "No",
-    "Do they repair engines?": "No",
-    "Do they drive taxis?": "No",
-    "Do they work underground?": "No",
-    "Do they work from home?": "No",
-    "Do they speak more than one language?": "Sometimes",
-    "Do they check the weather before working?": "Yes",
-    "Do they carry hundreds of people?": "Yes",
-    "Do they serve drinks to passengers?": "No",
-    "Is their job considered high responsibility?": "Yes"
-  },
-  "hint": "They fly planes across the world."
-},
-{
-  "name": "Pharmacist",
-  "answers": {
-    "Do they work in drugstores or hospitals?": "Yes",
-    "Do they give people medicine?": "Yes",
-    "Do they explain how to take medicine?": "Yes",
-    "Do they wear lab coats?": "Yes",
-    "Do they need a pharmacy degree?": "Yes",
-    "Do they stand at a counter?": "Yes",
-    "Do they talk to patients?": "Yes",
-    "Do they fill prescriptions?": "Yes",
-    "Do they work indoors?": "Yes",
-    "Do they handle dangerous drugs carefully?": "Yes",
-    "Do they work with animals?": "No",
-    "Do they perform surgeries?": "No",
-    "Do they clean hospital rooms?": "No",
-    "Do they cook food?": "No",
-    "Do they use computers for records?": "Yes",
-    "Do they work weekends or nights?": "Sometimes",
-    "Do they need to be detail-oriented?": "Yes",
-    "Do they work with doctors and nurses?": "Yes",
-    "Do they manage a pharmacy team sometimes?": "Yes",
-    "Do they give vaccines?": "Sometimes",
-    "Do they build houses?": "No"
-  },
-  "hint": "They prepare and give out medicine."
-},
-{
-  "name": "Librarian",
-  "answers": {
-    "Do they work in a library?": "Yes",
-    "Do they organize books and materials?": "Yes",
-    "Do they help people find information?": "Yes",
-    "Do they use computers?": "Yes",
-    "Do they work in a quiet place?": "Yes",
-    "Do they assist students and researchers?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Do they lead story times or reading programs?": "Sometimes",
-    "Do they wear a uniform?": "No",
-    "Do they issue library cards?": "Yes",
-    "Do they fly airplanes?": "No",
-    "Do they cook meals?": "No",
-    "Do they perform surgeries?": "No",
-    "Do they fix cars?": "No",
-    "Do they build houses?": "No",
-    "Do they spend a lot of time reading?": "Yes",
-    "Do they recommend books to readers?": "Yes",
-    "Do they work indoors?": "Yes",
-    "Do they work in schools or public buildings?": "Yes",
-    "Do they need a degree in library science?": "Often",
-    "Do they teach history classes?": "No"
-  },
-  "hint": "They manage and organize books and resources."
-},
-{
-  "name": "Construction Worker",
-  "answers": {
-    "Do they build things like buildings and roads?": "Yes",
-    "Do they work outdoors often?": "Yes",
-    "Do they wear hard hats?": "Yes",
-    "Do they use heavy tools and machines?": "Yes",
-    "Do they need to be physically strong?": "Yes",
-    "Do they work on ladders or scaffolding?": "Yes",
-    "Do they follow safety rules?": "Yes",
-    "Do they read blueprints?": "Sometimes",
-    "Do they drive trucks or forklifts?": "Sometimes",
-    "Do they build houses?": "Yes",
-    "Do they sit at a desk all day?": "No",
-    "Do they teach children?": "No",
-    "Do they work in kitchens?": "No",
-    "Do they wear formal clothes to work?": "No",
-    "Do they use a computer often?": "No",
-    "Do they use nails and hammers?": "Yes",
-    "Do they work alone?": "No",
-    "Do they work in teams?": "Yes",
-    "Do they get dirty while working?": "Yes",
-    "Do they usually work indoors?": "No",
-    "Is their work physically demanding?": "Yes"
-  },
-  "hint": "They build structures with tools and strength."
-},
-{
-  "name": "Software Developer",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Often",
-    "Do they work with their hands?": "No",
-    "Do they wear a uniform?": "No",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "No",
-    "Is their job dangerous?": "No",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Sometimes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Often",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Sometimes",
-    "Do they work outdoors?": "No",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Rarely",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They write computer programs and apps"
-},
-                {
-  "name": "Architect",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Yes",
-    "Do they work with their hands?": "Sometimes",
-    "Do they wear a uniform?": "No",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "No",
-    "Is their job dangerous?": "No",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Often",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Sometimes",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Sometimes",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Sometimes"
-  },
-  "hint": "They design buildings and structures"
-},
-                {
-  "name": "Mechanic",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "No",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "Sometimes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Rarely",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Rarely",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They repair cars and engines"
-},
-                {
-  "name": "Actor",
-  "answers": {
-    "Do they work indoors?": "Often",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Sometimes",
-    "Do they wear a uniform?": "Sometimes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Rarely",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "No",
-    "Do they work nights?": "Often",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "Sometimes",
-    "Do they travel for work?": "Often",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Sometimes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Sometimes",
-    "Do they work for the government?": "No",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They perform in movies, shows, or plays"
-},
-                {
-  "name": "Scientist",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Yes",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Sometimes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Rarely",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "Sometimes",
-    "Do they travel for work?": "Sometimes",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Rarely",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Rarely"
-  },
-  "hint": "They study the natural world and do experiments"
-},
-                {
-  "name": "Electrician",
-  "answers": {
-    "Do they work indoors?": "Often",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "No",
-    "Is their job dangerous?": "Yes",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Yes",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Sometimes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They install and fix electrical systems"
-},
-                {
-  "name": "Pilot",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Sometimes",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Yes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Often",
-    "Do they earn a high salary?": "Yes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Yes",
-    "Do they work outdoors?": "No",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Sometimes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Rarely"
-  },
-  "hint": "They fly planes"
-},
-                {
-  "name": "Farmer",
-  "answers": {
-    "Do they work indoors?": "Rarely",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "No",
-    "Do they work with technology?": "Sometimes",
-    "Do they work with children?": "No",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "Sometimes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Rarely",
-    "Do they work with animals?": "Often",
-    "Do they travel for work?": "No",
-    "Do they work outdoors?": "Yes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Rarely",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "Yes",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They grow food and raise animals"
-},
-                {
-  "name": "Journalist",
-  "answers": {
-    "Do they work indoors?": "Often",
-    "Do they need a college degree?": "Yes",
-    "Do they work with their hands?": "No",
-    "Do they wear a uniform?": "No",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Rarely",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "No",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Often",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "Rarely",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Sometimes"
-  },
-  "hint": "They write or report news stories"
-},
-{
-  "name": "Musician",
-  "answers": {
-    "Do they work indoors?": "Often",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "No",
-    "Do they work with technology?": "Sometimes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Rarely",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "No",
-    "Do they work nights?": "Often",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Often",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Sometimes",
-    "Do they work for the government?": "Rarely",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They play or compose music"
-},
-                {
-  "name": "Paramedic",
-  "answers": {
-    "Do they work indoors?": "Sometimes",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Yes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Often",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Yes",
-    "Do they work outdoors?": "Yes",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Rarely"
-  },
-  "hint": "They give emergency medical help before reaching the hospital"
-},
-{
-  "name": "Librarian",
-  "answers": {
-    "Do they work in a library?": "Yes",
-    "Do they organize books and materials?": "Yes",
-    "Do they help people find information?": "Yes",
-    "Do they use computers?": "Yes",
-    "Do they work in a quiet place?": "Yes",
-    "Do they assist students and researchers?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Do they lead story times or reading programs?": "Sometimes",
-    "Do they wear a uniform?": "No",
-    "Do they issue library cards?": "Yes",
-    "Do they fly airplanes?": "No",
-    "Do they cook meals?": "No",
-    "Do they perform surgeries?": "No",
-    "Do they fix cars?": "No",
-    "Do they build houses?": "No",
-    "Do they spend a lot of time reading?": "Yes",
-    "Do they recommend books to readers?": "Yes",
-    "Do they work indoors?": "Yes",
-    "Do they work in schools or public buildings?": "Yes",
-    "Do they need a degree in library science?": "Often",
-    "Do they teach history classes?": "No"
-  },
-  "hint": "They manage and organize books and resources."
-},
-{
-  "name": "Fashion Designer",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Sometimes",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "No",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Rarely",
-    "Is their job dangerous?": "No",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "No",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Often",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Sometimes",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "Rarely",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They create clothing and fashion accessories"
-},
-                {
-  "name": "Dentist",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Yes",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Rarely",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Rarely",
-    "Do they earn a high salary?": "Yes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Rarely",
-    "Do they work outdoors?": "No",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Sometimes"
-  },
-  "hint": "They care for people's teeth and oral health"
-},
-                {
-  "name": "Park Ranger",
-  "answers": {
-    "Do they work indoors?": "Sometimes",
-    "Do they need a college degree?": "Sometimes",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Sometimes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Sometimes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "No",
-    "Do they work with animals?": "Yes",
-    "Do they travel for work?": "Rarely",
-    "Do they work outdoors?": "Yes",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Yes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "No"
-  },
-  "hint": "They protect natural parks and guide visitors"
-},
-                {
-  "name": "Translator",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "Sometimes",
-    "Do they work with their hands?": "No",
-    "Do they wear a uniform?": "No",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Rarely",
-    "Is their job dangerous?": "No",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "Sometimes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Sometimes",
-    "Do they work outdoors?": "No",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Sometimes",
-    "Do they work with the public?": "Sometimes",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They change written text from one language to another"
-},
-                {
-  "name": "Plumber",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Sometimes",
-    "Do they work with children?": "No",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "Yes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Yes",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "Sometimes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They fix water and drainage systems in homes and buildings"
-},
-                {
-  "name": "Actor",
-  "answers": {
-    "Do they work indoors?": "Sometimes",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "No",
-    "Do they wear a uniform?": "Sometimes",
-    "Do they work with technology?": "Yes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "No",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "Sometimes",
-    "Do they travel for work?": "Often",
-    "Do they work outdoors?": "Sometimes",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Sometimes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Sometimes",
-    "Do they work for the government?": "No",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They perform in plays, movies, or TV shows"
-},
-                {
-  "name": "Makeup Artist",
-  "answers": {
-    "Do they work indoors?": "Yes",
-    "Do they need a college degree?": "No",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "No",
-    "Do they work with technology?": "Sometimes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "No",
-    "Do they work in teams?": "Sometimes",
-    "Do they need special certification?": "Sometimes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "Sometimes",
-    "Do they work with animals?": "No",
-    "Do they travel for work?": "Sometimes",
-    "Do they work outdoors?": "Rarely",
-    "Do they create things?": "Yes",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "No",
-    "Do they work for the government?": "No",
-    "Do they work with food?": "No",
-    "Are they self-employed?": "Often"
-  },
-  "hint": "They apply cosmetics to enhance appearances"
-},
-                {
-  "name": "Zookeeper",
-  "answers": {
-    "Do they work indoors?": "Sometimes",
-    "Do they need a college degree?": "Sometimes",
-    "Do they work with their hands?": "Yes",
-    "Do they wear a uniform?": "Yes",
-    "Do they work with technology?": "Sometimes",
-    "Do they work with children?": "Sometimes",
-    "Is their job dangerous?": "Sometimes",
-    "Do they work in teams?": "Yes",
-    "Do they need special certification?": "Sometimes",
-    "Do they work nights?": "Sometimes",
-    "Do they earn a high salary?": "No",
-    "Do they work with animals?": "Yes",
-    "Do they travel for work?": "Rarely",
-    "Do they work outdoors?": "Often",
-    "Do they create things?": "No",
-    "Do they use specialized tools?": "Yes",
-    "Do they work with the public?": "Yes",
-    "Is physical fitness important?": "Yes",
-    "Do they work for the government?": "Sometimes",
-    "Do they work with food?": "Sometimes",
-    "Are they self-employed?": "No"
-  },
-  "hint": "They take care of animals in a zoo"
-}
+                    hint: "They represent clients in legal matters and provide legal advice"
+                }
             ];
             
             let currentOccupation;
             let selectedQuestions = 0;
             let selectedQuestionIds = [];
             let gameOver = false;
-            
-            // Generate all questions
-            const questions = [
-                "Do they work indoors?",
-                "Do they need a college degree?",
-                "Do they work with their hands?",
-                "Do they wear a uniform?",
-                "Do they work with technology?",
-                "Do they work with children?",
-                "Is their job dangerous?",
-                "Do they work in teams?",
-                "Do they need special certification?",
-                "Do they work nights?",
-                "Do they earn a high salary?",
-                "Do they work with animals?",
-                "Do they travel for work?",
-                "Do they work outdoors?",
-                "Do they create things?",
-                "Do they use specialized tools?",
-                "Do they work with the public?",
-                "Is physical fitness important?",
-                "Do they work for the government?",
-                "Do they work with food?",
-                "Are they self-employed?"
-            ];
+            let currentQuestions = [];
             
             function showToast(message) {
                 // Check if a toast already exists and remove it
@@ -1472,11 +619,17 @@
                 // Choose a random occupation
                 currentOccupation = occupations[Math.floor(Math.random() * occupations.length)];
                 
+                // Get questions for this occupation
+                currentQuestions = Object.keys(currentOccupation.questions);
+                
+                // Update total questions count
+                document.getElementById('total-questions').textContent = currentQuestions.length;
+                
                 // Generate question cards
                 const questionsContainer = document.getElementById('questions-container');
                 questionsContainer.innerHTML = '';
                 
-                questions.forEach((question, index) => {
+                currentQuestions.forEach((question, index) => {
                     const cardContainer = document.createElement('div');
                     cardContainer.className = 'card-container';
                     cardContainer.dataset.id = index;
@@ -1495,7 +648,7 @@
                     cardBack.innerHTML = `
                         <div class="text-center">
                             <p class="font-medium text-gray-800 mb-1 card-text">${question}</p>
-                            <p class="text-indigo-700 font-bold card-text">${currentOccupation.answers[question]}</p>
+                            <p class="text-indigo-700 font-bold card-text">${currentOccupation.questions[question]}</p>
                         </div>
                     `;
                     
@@ -1541,16 +694,19 @@
             
             function updateStarDisplay() {
                 const stars = document.querySelectorAll('.stars-container .star');
+                const totalQuestions = currentQuestions.length;
+                const oneThird = Math.ceil(totalQuestions / 3);
+                const twoThirds = Math.ceil(2 * totalQuestions / 3);
                 
                 // Clear all stars
                 stars.forEach(star => star.classList.remove('filled'));
                 
                 // Fill stars based on questions revealed
-                if (selectedQuestions <= 7) {
+                if (selectedQuestions <= oneThird) {
                     stars[0].classList.add('filled');
                     stars[1].classList.add('filled');
                     stars[2].classList.add('filled');
-                } else if (selectedQuestions <= 14) {
+                } else if (selectedQuestions <= twoThirds) {
                     stars[0].classList.add('filled');
                     stars[1].classList.add('filled');
                 } else {
@@ -1609,15 +765,18 @@
             function showStarRating() {
                 const starRating = document.getElementById('star-rating');
                 const stars = starRating.querySelectorAll('.star');
+                const totalQuestions = currentQuestions.length;
+                const oneThird = Math.ceil(totalQuestions / 3);
+                const twoThirds = Math.ceil(2 * totalQuestions / 3);
                 
                 // Clear all stars first
                 stars.forEach(star => star.classList.remove('filled'));
                 
                 // Determine star rating based on questions revealed
                 let rating = 1; // Default 1 star
-                if (selectedQuestions <= 7) {
+                if (selectedQuestions <= oneThird) {
                     rating = 3;
-                } else if (selectedQuestions <= 14) {
+                } else if (selectedQuestions <= twoThirds) {
                     rating = 2;
                 }
                 
@@ -1664,5 +823,5 @@
             showHomePage();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'947bf2d9609a8452',t:'MTc0ODU4NDE3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'947cd82b83060744',t:'MTc0ODU5MzU2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
